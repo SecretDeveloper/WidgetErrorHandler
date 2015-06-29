@@ -1,0 +1,27 @@
+{
+  "name": "widget.onerror",
+  "version": "0.1.0",
+  "description": "Filtered global error catching for embedded widget controls.",
+  "main": "widget.onerror.js",
+  "scripts": {
+    "test": "qunit -c widget.onerror.js -t ./spec/widget.onerror.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SecretDeveloper/widget.onerror.git"
+  },
+  "keywords": [
+    "widget",
+    "window.onerror",
+    "error"
+  ],
+  "author": "Gary Kenneally (@SecretDeveloper)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SecretDeveloper/widget.onerror/issues"
+  },
+  "homepage": "https://github.com/SecretDeveloper/widget.onerror",
+  "devDependencies": {
+    "qunit": "^0.7.6"
+  }
+}
