@@ -5,7 +5,7 @@ requirejs.config({
     paths: {
         "widget.onerror": "widget.onerror",
         "ErrorA":"test/ErrorA",
-        "ErrorB":"test/ErrorB",        
+        "ErrorB":"http://widget.onerror2/test/ErrorB",        
     }
 });
 
@@ -22,6 +22,17 @@ require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, 
             }
         });
 
+	var delay = (function(){
+    	var init = 50;
+    	var step = 50;
+    	var current = init;
+
+    	return function(reset){
+    		if(reset) current = init;
+    		current+=step;
+    		return current;
+    	};
+    })();
 
 	test("widget.onerror - throws error when errorCallback is invalid", function () {
 		assert.throws(function(){
@@ -91,26 +102,17 @@ require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, 
 
 	test("widget.onerror - errorCallback is executed", function () {
 
-		var counter = 4;
+		var counter = 8;
     	expect(counter);
     	stop( 1 ); 
-
-    	var delay = (function(){
-    		var init = 100;
-    		var step = 200
-    		return function(){
-    			init+=step;
-    			return init;
-    		}
-    	})();
-				
-		function done() { 
-			console.log("done - counter" , counter);
-			if(counter > 0) counter = counter -1;
-			
-			if(counter == 0){
-				console.log("done - calling start()" , counter);
-				start(); 				
+    			
+		function done() { 			
+			if(counter > 0) counter = counter -1;			
+			if(counter == 0){				
+				// all expected assertions were called.
+				// execute qunit.start() after a timeout to catch any straggling items we did not account for.  
+				// Test will fail if assertion count is not what was expected.
+				setTimeout(function(){start()}, 200); 				
 			} 
 		} 	
 
@@ -137,7 +139,23 @@ require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, 
     	}, delay());
 
     	setTimeout(function(){
+    		errorA.throwUndefined();
+    	}, delay());
+
+    	setTimeout(function(){
     		errorB.throw();
+    	}, delay());
+
+    	setTimeout(function(){
+    		errorB.throwError();
+    	}, delay());
+
+    	setTimeout(function(){
+    		errorB.error();
+    	}, delay());
+
+    	setTimeout(function(){
+    		errorB.throwUndefined();
     	}, delay());
     });
 });
