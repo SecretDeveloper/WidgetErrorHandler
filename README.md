@@ -4,7 +4,7 @@ Can be used to wrap global window.onerror events and filter them based on a regu
 
 ##Options:
 ```javascript
-    widget.onerror.init(errorCallback[, regexUrl, filterCallback])
+widget.onerror.init(errorCallback[, regexUrl, filterCallback])
 ```
 
 **errorCallback** is the function to be called when a window.onerror event is triggered. Should return true/false to indicate whether the error has been handled. Parameters are *errorMsg, url, lineNumber*  
