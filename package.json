@@ -4,7 +4,7 @@
   "description": "Filtered global error catching for embedded widget controls.",
   "main": "widget.onerror.js",
   "scripts": {
-    "test": "qunit -c widget.onerror.js -t ./spec/widget.onerror.spec.js"
+    "test": "qunit -c ./test/lib/require.js:widget.onerror.js -t ./spec/widget.onerror.spec.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,5 @@
   "bugs": {
     "url": "https://github.com/SecretDeveloper/widget.onerror/issues"
   },
-  "homepage": "https://github.com/SecretDeveloper/widget.onerror",
-  "devDependencies": {
-    "qunit": "^0.7.6"
-  }
+  "homepage": "https://github.com/SecretDeveloper/widget.onerror"  
 }

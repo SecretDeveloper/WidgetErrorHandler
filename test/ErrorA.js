@@ -1,8 +1,20 @@
 define("ErrorA", function(){
 	
 	var A = {};
-	A.Error = function(){
+
+	A.error = function(){
+				undefined.undefined();
+			};
+
+	A.throw = function(){
 				throw "ErrorA";
 			};
+
+	A.throwError = function(){
+				var er = new Error("test error");
+				throw er;
+			};
+
+
 	return A;
 });

@@ -5,15 +5,11 @@ requirejs.config({
     paths: {
         "widget.onerror": "widget.onerror",
         "ErrorA":"test/ErrorA",
-        "ErrorB":"test/ErrorB",
-        "ErrorB":"test/ErrorB",
+        "ErrorB":"test/ErrorB",        
     }
 });
 
 require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, errorB){
-	//console.log("widgetOnError", widgetOnError);
-	//console.log("errorA", errorA);
-	//console.log("errorB", errorB);
 
 	module('Autocomplete',{
             setup: function() {
@@ -95,16 +91,27 @@ require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, 
 
 	test("widget.onerror - errorCallback is executed", function () {
 
-    	expect(4);
+		var counter = 4;
+    	expect(counter);
+    	stop( 1 ); 
 
-    	stop( 2 );
- 
-		// Only call start() when counter is 0.
-		var counter = 2;
+    	var delay = (function(){
+    		var init = 100;
+    		var step = 200
+    		return function(){
+    			init+=step;
+    			return init;
+    		}
+    	})();
+				
 		function done() { 
 			console.log("done - counter" , counter);
-			if(counter >0) --counter;
-			if(counter == 0) start(); 			
+			if(counter > 0) counter = counter -1;
+			
+			if(counter == 0){
+				console.log("done - calling start()" , counter);
+				start(); 				
+			} 
 		} 	
 
     	var errorCallback = function(){
@@ -118,23 +125,19 @@ require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, 
     	widgetOnError.init(errorCallback);
 
     	setTimeout(function(){
-    		errorA.Error();
-    	}, 100);
+    		errorA.throw();
+    	}, delay());
 
     	setTimeout(function(){
-    		errorA.Error();
-    	}, 110);
+    		errorA.throwError();
+    	}, delay());
 
     	setTimeout(function(){
-    		errorA.Error();
-    	}, 120);
+    		errorA.error();
+    	}, delay());
 
     	setTimeout(function(){
-    		errorB.Error();
-    	}, 130);
-
-
-
+    		errorB.throw();
+    	}, delay());
     });
-
 });
