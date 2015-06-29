@@ -11,9 +11,9 @@ requirejs.config({
 });
 
 require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, errorB){
-	console.log("widgetOnError", widgetOnError);
-	console.log("errorA", errorA);
-	console.log("errorB", errorB);
+	//console.log("widgetOnError", widgetOnError);
+	//console.log("errorA", errorA);
+	//console.log("errorB", errorB);
 
 	module('Autocomplete',{
             setup: function() {
@@ -48,12 +48,12 @@ require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, 
 	    equal(widgetOnError.onerror, null, "Expected widgetOnError.onerror to be null");
 	    
 	    var originalOnError = function(){
-	    	console.log("originalOnError executed");
-	    	console.log("errorCallback", arguments);
+	    	//console.log("originalOnError executed");
+	    	//console.log("errorCallback", arguments);
 	    };
 	    var newOnError = function(){
-	    	console.log("newOnError executed");
-	    	console.log("errorCallback", arguments);
+	    	//console.log("newOnError executed");
+	    	//console.log("errorCallback", arguments);
 	    };
 
 	    window.onerror = originalOnError;	    
@@ -71,12 +71,12 @@ require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, 
 	    equal(widgetOnError.onerror, null, "Expected widgetOnError.onerror to be null");
 	    
 	    var originalOnError = function(){
-	    	console.log("originalOnError executed");
-	    	console.log("errorCallback", arguments);
+	    	//console.log("originalOnError executed");
+	    	//console.log("errorCallback", arguments);
 	    };
 	    var newOnError = function(){
-	    	console.log("newOnError executed");
-	    	console.log("errorCallback", arguments);
+	    	//console.log("newOnError executed");
+	    	//console.log("errorCallback", arguments);
 	    };
 
 	    window.onerror = originalOnError;	    
@@ -93,16 +93,26 @@ require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, 
 		equal(originalOnError, window.onerror, "Expected originalOnError to equal window.onerror");
     });
 
-/*
-    QUnit.test("widget.onerror - ", function (assert) {
+	test("widget.onerror - errorCallback is executed", function () {
 
-    	window.calledCount = 0;
-    	console.log(assert);
-    	var done = assert.async();
+    	expect(4);
+
+    	stop( 2 );
+ 
+		// Only call start() when counter is 0.
+		var counter = 2;
+		function done() { 
+			console.log("done - counter" , counter);
+			if(counter >0) --counter;
+			if(counter == 0) start(); 			
+		} 	
 
     	var errorCallback = function(){
-    		window.calledCount++;
-    		return false;
+    		console.log("errorcallback args", arguments);
+    		//console.log("counter", counter);
+    		ok(arguments, "errorcallback executed");
+    		done();
+    		return true;
     	}
 
     	widgetOnError.init(errorCallback);
@@ -111,19 +121,20 @@ require(['widget.onerror', "ErrorA", "ErrorB"], function(widgetOnError, errorA, 
     		errorA.Error();
     	}, 100);
 
+    	setTimeout(function(){
+    		errorA.Error();
+    	}, 110);
+
+    	setTimeout(function(){
+    		errorA.Error();
+    	}, 120);
 
     	setTimeout(function(){
     		errorB.Error();
-    	}, 100);
+    	}, 130);
 
-    	setTimeout(function(){
-    		equal(2, this.calledCount);
-    		done();
-    		console.log("done");
-    	}, 200);
 
-    	equal(widgetOnError.errorCallback, errorCallback, "Expected this.onerror to be errorCallback");
+
     });
- */
- 
+
 });

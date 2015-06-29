@@ -9,8 +9,7 @@ define("widget.onerror", function(){
 		if(typeof errorCallback != "function") throw "errorCallback must be provided.";
 		widgetOnError.errorCallback = errorCallback;
 		
-		window.onerror = function(errorMsg, url, lineNumber){
-			console.log("onerror", arguments);
+		window.onerror = function(errorMsg, url, lineNumber){		
 
 			var res = false;
 			// call pre existing onerror function if one existed.
